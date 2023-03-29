@@ -3,8 +3,7 @@ package br.ufsc.graphs.structures.storage;
 import br.ufsc.graphs.structures.Graph;
 import br.ufsc.graphs.structures.WeightedGraphImp;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class MatrixStorage implements GraphStorage {
     private Number[][] matrix;
@@ -77,18 +76,17 @@ public class MatrixStorage implements GraphStorage {
         for (int i = 0; i < vertices(); i++) {
             if (!get(v, i).equals(nullValue)) count++;
         }
-        return count;    }
+        return count;
+    }
 
     @Override
-    public int[] neighbours(int v) {
-        int[] neighbours = new int[vertices() - 1];
-        int len = 0;
+    public Collection<Integer> neighbours(int v) {
+        Set<Integer> neighbours = new HashSet<>(vertices() - 1);
         for (int i = 0; i < vertices(); i++) {
             if (!get(v, i).equals(nullValue)) {
-                neighbours[len] = i;
-                len++;
+                neighbours.add(i);
             }
         }
-        return Arrays.copyOf(neighbours, len);
+        return neighbours;
     }
 }

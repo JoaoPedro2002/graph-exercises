@@ -4,8 +4,7 @@ package br.ufsc.graphs.structures.storage;
 import br.ufsc.graphs.structures.Graph;
 import br.ufsc.graphs.structures.WeightedGraphImp;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * https://stackoverflow.com/questions/3187957/how-to-store-a-symmetric-matrix
@@ -94,16 +93,15 @@ public class VectorStorage implements GraphStorage {
     }
 
     @Override
-    public int[] neighbours(int v) {
-        int[] neighbours = new int[vertices() - 1];
-        int len = 0;
+    public Collection<Integer> neighbours(int v) {
+        Set<Integer> neighbours = new HashSet<>(vertices - 1);
         for (int i = 0; i < vertices(); i++) {
             if (!get(v, i).equals(nullValue)) {
-                neighbours[len] = i;
-                len++;
+                neighbours.add(i);
             }
         }
-        return Arrays.copyOf(neighbours, len);    }
+        return neighbours;
+    }
 
     private int matrixPosToVector(int i, int j) {
         if (i <= j) return i * vertices - (i - 1) * i / 2 + j - i;

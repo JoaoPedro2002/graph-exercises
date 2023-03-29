@@ -6,7 +6,7 @@ import br.ufsc.graphs.structures.storage.GraphStorage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.regex.Matcher;
 
 public class GraphImp implements Graph {
@@ -24,7 +24,7 @@ public class GraphImp implements Graph {
 
     @Override
     public int getEdgesQnt() {
-        return storage.vertices();
+        return storage.edges();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class GraphImp implements Graph {
     }
 
     @Override
-    public int[] neighbours(int v) {
+    public Collection<Integer> neighbours(int v) {
         return storage.neighbours(v);
     }
 
@@ -49,14 +49,13 @@ public class GraphImp implements Graph {
 
     @Override
     public void read(String file) {
-        read(file, NULL_VALUE);
-    }
-
-    protected void read(String file, Number nullValue) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
+            // define o tamanho da estrutura de dados e insere os vértices e seus rótulos
             readVertices(reader);
+            // adiciona as arestas e seu peso caso se aplique
             readEdges(reader);
+            // normaliza o valor dos dados caso se aplique
             storage.normalize();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -65,7 +64,7 @@ public class GraphImp implements Graph {
 
     protected void readEdges(BufferedReader reader) throws IOException {
         if (!reader.readLine().contains("*edges")) throw new IllegalStateException(NON_CONFORMANT_FILE);
-        reader.lines().parallel().forEach(this::addEdge);
+        reader.lines().forEach(this::addEdge);
     }
 
     private void addEdge(String line) {
@@ -104,25 +103,5 @@ public class GraphImp implements Graph {
     @Override
     public void prettyPrint() {
         storage.prettyPrint(labels);
-    }
-
-    protected int[] neighbours(int v, Number nullValue) {
-        int[] neighbours = new int[storage.vertices() - 1];
-        int len = 0;
-        for (int i = 0; i < storage.vertices(); i++) {
-            if (!storage.get(v, i).equals(nullValue)) {
-                neighbours[len] = i;
-                len++;
-            }
-        }
-        return Arrays.copyOf(neighbours, len);
-    }
-
-    protected int degree(int v, Number nullValue) {
-        int count = 0;
-        for (int i = 0; i < storage.vertices(); i++) {
-            if (!storage.get(v, i).equals(nullValue)) count++;
-        }
-        return count;
     }
 }

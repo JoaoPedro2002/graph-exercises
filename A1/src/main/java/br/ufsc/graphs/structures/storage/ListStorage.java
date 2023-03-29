@@ -1,7 +1,6 @@
 package br.ufsc.graphs.structures.storage;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ListStorage implements GraphStorage {
 
@@ -70,7 +69,7 @@ public class ListStorage implements GraphStorage {
     }
 
     @Override
-    public int[] neighbours(int v1) {
-        return adjacencyList[v1].values().stream().mapToInt(Number::intValue).toArray();
+    public Collection<Integer> neighbours(int v1) {
+        return adjacencyList[v1].keySet();
     }
 }
