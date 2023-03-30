@@ -13,7 +13,7 @@ public class Main {
         GraphBuilder builder = new GraphBuilder();
         Graph graph = builder.withImplementation(GraphStorage.Implementation.MIXED).withFile(file).build();
         graph.prettyPrint();
-        BreadthFirstSearcher.search(graph);
+        BreadthFirstSearcher.search(graph, 3);
         file = FileUtils.getCompletePathFromResources("instancias/ciclo_euleriano/ContemCicloEuleriano.net");
         graph = builder.withFile(file).build();
         HierholzerSearch.logSearch(graph);

@@ -1,24 +1,23 @@
 package br.ufsc.graphs.structures.search;
 
 import br.ufsc.graphs.structures.Graph;
-import br.ufsc.graphs.structures.GraphImp;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 
 public class BreadthFirstSearcher implements GraphSearcher {
 
-    public static void search(Graph graph) {
+    public static Pair<Integer, Integer> search(Graph graph, int initialV) {
         boolean[] visitArray = new boolean[graph.getVerticesQnt()];
-        Arrays.fill(visitArray, false);
+        Queue<Integer> queue = new LinkedList<>(List.of(initialV));
         int distanceFromOrigin = 0;
-        int predecessor = 0;
-        int counter = 0;
+        int predecessor = initialV;
+        int level = 0;
 
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(0);
         while (!queue.isEmpty()) {
             int u = queue.poll();
-            System.out.println(counter++ + ": " + Arrays.toString(graph.neighbours(u).stream().map(graph::label).toArray()));
+            GraphSearcher.log(level++, graph, u);     // TODO optional log
             for (int neighbor : graph.neighbours(u)) {
                 if (!visitArray[neighbor]) {
                     visitArray[neighbor] = true;
@@ -28,7 +27,6 @@ public class BreadthFirstSearcher implements GraphSearcher {
                 }
             }
         }
-
+        return new ImmutablePair<>(distanceFromOrigin, predecessor);
     }
-
 }
