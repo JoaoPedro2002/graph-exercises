@@ -17,8 +17,6 @@ public interface GraphStorage {
 
     int edges();
 
-    void normalize();
-
     void prettyPrint(String[] labels);
 
     int degree(int v);

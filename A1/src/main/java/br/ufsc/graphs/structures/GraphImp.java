@@ -47,6 +47,11 @@ public class GraphImp implements Graph {
         return !storage.get(v1, v2).equals(NULL_VALUE);
     }
 
+    /**
+     * Cria os vértices e arestas do grafo com base em um arquivo
+     * @param file caminho do arquivo
+     * @throws IllegalStateException arquivo não conforme com o padrão
+     */
     @Override
     public void read(String file) {
         try {
@@ -55,8 +60,6 @@ public class GraphImp implements Graph {
             readVertices(reader);
             // adiciona as arestas e seu peso caso se aplique
             readEdges(reader);
-            // normaliza o valor dos dados caso se aplique
-            storage.normalize();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -70,13 +73,10 @@ public class GraphImp implements Graph {
     private void addEdge(String line) {
         int vertex1, vertex2;
         Matcher matcher = NUMBER_PATTERN.matcher(line);
-        matcher.find();
-        vertex1 = Integer.parseInt(matcher.group()) - 1;
-        matcher.find();
-        vertex2 = Integer.parseInt(matcher.group()) - 1;
+        vertex1 = Integer.parseInt(getIfPresent(matcher)) - 1;
+        vertex2 = Integer.parseInt(getIfPresent(matcher)) - 1;
         if (this instanceof WeightedGraphImp) {
-            matcher.find();
-            float weight = Float.parseFloat(matcher.group());
+            double weight = Double.parseDouble(getIfPresent(matcher));
             storage.add(vertex1, vertex2, weight);
         } else {
             storage.add(vertex1, vertex2, PRESENT_VALUE);
@@ -88,20 +88,33 @@ public class GraphImp implements Graph {
         Matcher matcher;
         line = reader.readLine();
         matcher = NUMBER_PATTERN.matcher(line);
-        if (!matcher.find()) throw new IllegalStateException(NON_CONFORMANT_FILE);
-        int vertices = Integer.parseInt(matcher.group());
+        int vertices = Integer.parseInt(getIfPresent(matcher));
         storage.set(vertices);
         labels = new String[vertices];
         for (int i = 0; i < vertices; i++) {
             line = reader.readLine();
             matcher = LABEL_PATTERN.matcher(line);
-            if (!matcher.find()) throw new IllegalStateException(NON_CONFORMANT_FILE);
-            labels[i] = matcher.group().replace("\"", "");
+            labels[i] = getIfPresent(matcher).replace("\"", "");
         }
     }
 
     @Override
     public void prettyPrint() {
         storage.prettyPrint(labels);
+    }
+
+    @Override
+    public double weight(int v1, int v2) {
+        return storage.get(v1, v2).doubleValue();
+    }
+
+    /**
+     * Procura o próximo String que segue determinado padrão e retorna.
+     * @return o string encontrado
+     * @throws IllegalStateException arquivo não conforme
+     */
+    private static String getIfPresent(Matcher matcher) {
+        if (!matcher.find()) throw new IllegalStateException(NON_CONFORMANT_FILE);
+        return matcher.group();
     }
 }

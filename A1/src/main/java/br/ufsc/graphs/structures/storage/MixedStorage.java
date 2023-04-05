@@ -43,12 +43,6 @@ public class MixedStorage implements GraphStorage {
     }
 
     @Override
-    public void normalize() {
-        matrixStorage.normalize();
-        listStorage.normalize();
-    }
-
-    @Override
     public void prettyPrint(String[] labels) {
         matrixStorage.prettyPrint(labels);
     }

@@ -42,4 +42,6 @@ public interface Graph {
     void read(String file);
 
     void prettyPrint();
+
+    double weight(int v1, int v2);
 }

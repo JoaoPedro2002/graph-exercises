@@ -12,11 +12,8 @@ public class MatrixStorage implements GraphStorage {
     private final Number nullValue;
 
     public MatrixStorage(boolean weighted) {
-        if (weighted) {
-            nullValue = WeightedGraphImp.NULL_VALUE;
-        } else {
-            nullValue = Graph.NULL_VALUE;
-        }
+        nullValue = weighted ?
+                WeightedGraphImp.NULL_VALUE : Graph.NULL_VALUE;
     }
 
     @Override
@@ -28,6 +25,9 @@ public class MatrixStorage implements GraphStorage {
     @Override
     public void set(int size) {
         matrix = new Number[size][size];
+        for (Number[] numbers : matrix) {
+            Arrays.fill(numbers, nullValue);
+        }
     }
 
     @Override
@@ -43,15 +43,6 @@ public class MatrixStorage implements GraphStorage {
     @Override
     public int edges() {
         return edges;
-    }
-
-    @Override
-    public void normalize() {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix.length; j++) {
-                matrix[i][j] = Objects.requireNonNullElse(matrix[i][j], nullValue);
-            }
-        }
     }
 
     @Override

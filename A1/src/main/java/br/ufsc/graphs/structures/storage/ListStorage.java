@@ -46,11 +46,6 @@ public class ListStorage implements GraphStorage {
     }
 
     @Override
-    public void normalize() {
-        // Não aplicável
-    }
-
-    @Override
     public void prettyPrint(String[] labels) {
         for (int i = 0; i < labels.length; i++) {
             System.out.println(labels[i] + " {");

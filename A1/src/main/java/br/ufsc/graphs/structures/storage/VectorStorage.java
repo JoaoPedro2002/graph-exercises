@@ -18,11 +18,8 @@ public class VectorStorage implements GraphStorage {
     private final Number nullValue;
 
     public VectorStorage(boolean weighted) {
-        if (weighted) {
-            nullValue = WeightedGraphImp.NULL_VALUE;
-        } else {
-            nullValue = Graph.NULL_VALUE;
-        }
+        nullValue = weighted ?
+                WeightedGraphImp.NULL_VALUE : Graph.NULL_VALUE;
     }
 
     @Override
@@ -37,6 +34,7 @@ public class VectorStorage implements GraphStorage {
         int trueSize = size * (size + 1) / 2;
         this.vertices = size;
         vector = new Number[trueSize];
+        Arrays.fill(vector, nullValue);
     }
 
     @Override
@@ -52,13 +50,6 @@ public class VectorStorage implements GraphStorage {
     @Override
     public int edges() {
         return edges;
-    }
-
-    @Override
-    public void normalize() {
-        for (int i = 0; i < vector.length; i++) {
-            vector[i] = Objects.requireNonNullElse(vector[i], nullValue);
-        }
     }
 
     @Override

@@ -30,7 +30,7 @@ class WeightedGraphTest {
 
     @Test
     void weight() {
-        assertEquals((float)0.3, graph.weight(0, 2));
+        assertEquals(0.3, graph.weight(0, 2));
     }
 
     @Test
