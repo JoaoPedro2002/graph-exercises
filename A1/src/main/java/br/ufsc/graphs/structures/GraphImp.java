@@ -10,12 +10,14 @@ import java.util.Collection;
 import java.util.regex.Matcher;
 
 public class GraphImp implements Graph {
+    private final boolean directional;
     protected String[] labels;
 
     final GraphStorage storage;
 
-    public GraphImp(GraphStorage storage) {
+    public GraphImp(GraphStorage storage, boolean directional) {
         this.storage = storage;
+        this.directional = directional;
     }
     @Override
     public int getVerticesQnt() {
@@ -106,6 +108,11 @@ public class GraphImp implements Graph {
     @Override
     public double weight(int v1, int v2) {
         return storage.get(v1, v2).doubleValue();
+    }
+
+    @Override
+    public boolean isDirectional() {
+        return directional;
     }
 
     /**
