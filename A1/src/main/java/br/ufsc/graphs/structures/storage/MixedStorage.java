@@ -1,13 +1,22 @@
 package br.ufsc.graphs.structures.storage;
 
+import br.ufsc.graphs.structures.util.DirectionalEdge;
+import br.ufsc.graphs.structures.util.Edge;
+import br.ufsc.graphs.structures.util.NonDirectionalEdge;
+
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MixedStorage implements GraphStorage {
+    private final boolean directional;
     ListStorage listStorage;
     GraphStorage matrixStorage;
+    Set<Edge> edges = new HashSet<>();
 
     public MixedStorage(boolean directional, boolean weighted) {
         listStorage = new ListStorage(directional);
+        this.directional = directional;
         if (directional) {
             matrixStorage = new MatrixStorage(weighted);
         } else {
@@ -19,6 +28,7 @@ public class MixedStorage implements GraphStorage {
     public void add(int vertex1, int vertex2, Number positionValue) {
         listStorage.add(vertex1, vertex2, positionValue);
         matrixStorage.add(vertex1, vertex2, positionValue);
+        edges.add(directional ? new DirectionalEdge(vertex1, vertex2) : new NonDirectionalEdge(vertex1, vertex2));
     }
 
     @Override
@@ -33,13 +43,13 @@ public class MixedStorage implements GraphStorage {
     }
 
     @Override
-    public int vertices() {
-        return matrixStorage.vertices();
+    public int verticesQnt() {
+        return matrixStorage.verticesQnt();
     }
 
     @Override
-    public int edges() {
-        return matrixStorage.edges();
+    public int edgesQnt() {
+        return edges.size();
     }
 
     @Override
@@ -55,5 +65,10 @@ public class MixedStorage implements GraphStorage {
     @Override
     public Collection<Integer> neighbours(int v) {
         return listStorage.neighbours(v);
+    }
+
+    @Override
+    public Set<Edge> getEdges() {
+        return edges;
     }
 }

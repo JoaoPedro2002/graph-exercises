@@ -2,6 +2,8 @@ package br.ufsc.graphs.structures.storage;
 
 import br.ufsc.graphs.structures.Graph;
 import br.ufsc.graphs.structures.WeightedGraphImp;
+import br.ufsc.graphs.structures.util.DirectionalEdge;
+import br.ufsc.graphs.structures.util.Edge;
 
 import java.util.*;
 
@@ -36,12 +38,12 @@ public class MatrixStorage implements GraphStorage {
     }
 
     @Override
-    public int vertices() {
+    public int verticesQnt() {
         return matrix.length;
     }
 
     @Override
-    public int edges() {
+    public int edgesQnt() {
         return edges;
     }
 
@@ -64,7 +66,7 @@ public class MatrixStorage implements GraphStorage {
     @Override
     public int degree(int v) {
         int count = 0;
-        for (int i = 0; i < vertices(); i++) {
+        for (int i = 0; i < verticesQnt(); i++) {
             if (!get(v, i).equals(nullValue)) count++;
         }
         return count;
@@ -72,12 +74,23 @@ public class MatrixStorage implements GraphStorage {
 
     @Override
     public Collection<Integer> neighbours(int v) {
-        Set<Integer> neighbours = new HashSet<>(vertices() - 1);
-        for (int i = 0; i < vertices(); i++) {
+        Set<Integer> neighbours = new HashSet<>(verticesQnt() - 1);
+        for (int i = 0; i < verticesQnt(); i++) {
             if (!get(v, i).equals(nullValue)) {
                 neighbours.add(i);
             }
         }
         return neighbours;
+    }
+
+    @Override
+    public Set<Edge> getEdges() {
+        Set<Edge> edges = new HashSet<>();
+        for (int i = 0; i < matrix.length; i++) {
+            for (Integer neighbour : neighbours(i)) {
+                edges.add(new DirectionalEdge(i, neighbour));
+            }
+        }
+        return edges;
     }
 }

@@ -1,10 +1,13 @@
 package br.ufsc.graphs.structures.storage;
 
+import br.ufsc.graphs.structures.util.Edge;
+
 import java.util.Collection;
+import java.util.Set;
 
 public interface GraphStorage {
     enum Implementation {
-        MATRIX, ADJACENCY_LIST, MIXED;
+        MATRIX, ADJACENCY_LIST, MIXED
     }
 
     void add(int vertex1, int vertex2, Number positionValue);
@@ -13,9 +16,9 @@ public interface GraphStorage {
 
     Number get(int vertex1, int vertex2);
 
-    int vertices();
+    int verticesQnt();
 
-    int edges();
+    int edgesQnt();
 
     void prettyPrint(String[] labels);
 
@@ -23,8 +26,10 @@ public interface GraphStorage {
 
     Collection<Integer> neighbours(int v);
 
+    Set<Edge> getEdges();
+
     /**
-     * Cria uma novo instância de um GraphStorage com base nos parâmetros
+     * Cria uma instância de um GraphStorage com base nos parâmetros
      * enviados
      * @param weighted se o grafo é ponderado
      * @param directional se o grafo é direcional

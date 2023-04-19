@@ -1,6 +1,9 @@
 package br.ufsc.graphs.structures;
 
+import br.ufsc.graphs.structures.util.Edge;
+
 import java.util.Collection;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public interface Graph {
@@ -30,6 +33,13 @@ public interface Graph {
     int getVerticesQnt();
 
     int getEdgesQnt();
+
+    /**
+     * Uma cópia da representação dos vértices
+     *
+     * @return os vértices
+     */
+    Set<Edge> getEdges();
 
     int degree(int v);
 
