@@ -2,29 +2,40 @@ package br.ufsc.graphs.structures;
 
 
 import br.ufsc.graphs.structures.storage.GraphStorage;
+import br.ufsc.graphs.structures.util.Edge;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 
 public class GraphImp implements Graph {
-    protected String[] labels;
+    private final boolean directional;
+
+    String[] labels;
 
     final GraphStorage storage;
 
-    public GraphImp(GraphStorage storage) {
+    public GraphImp(GraphStorage storage, boolean directional) {
         this.storage = storage;
+        this.directional = directional;
     }
     @Override
     public int getVerticesQnt() {
-        return storage.vertices();
+        return storage.verticesQnt();
     }
 
     @Override
     public int getEdgesQnt() {
-        return storage.edges();
+        return storage.edgesQnt();
+    }
+
+    @Override
+    public Set<Edge> getEdges() {
+        return new HashSet<>(storage.getEdges());
     }
 
     @Override
@@ -75,12 +86,9 @@ public class GraphImp implements Graph {
         Matcher matcher = NUMBER_PATTERN.matcher(line);
         vertex1 = Integer.parseInt(getIfPresent(matcher)) - 1;
         vertex2 = Integer.parseInt(getIfPresent(matcher)) - 1;
-        if (this instanceof WeightedGraphImp) {
-            double weight = Double.parseDouble(getIfPresent(matcher));
-            storage.add(vertex1, vertex2, weight);
-        } else {
-            storage.add(vertex1, vertex2, PRESENT_VALUE);
-        }
+        Number weight = this instanceof WeightedGraphImp ?
+                Double.parseDouble(getIfPresent(matcher)) : PRESENT_VALUE;
+        storage.add(vertex1, vertex2, weight);
     }
 
     protected void readVertices(BufferedReader reader) throws IOException {
@@ -106,6 +114,11 @@ public class GraphImp implements Graph {
     @Override
     public double weight(int v1, int v2) {
         return storage.get(v1, v2).doubleValue();
+    }
+
+    @Override
+    public boolean isDirectional() {
+        return directional;
     }
 
     /**

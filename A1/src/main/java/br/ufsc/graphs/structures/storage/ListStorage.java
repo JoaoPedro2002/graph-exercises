@@ -1,5 +1,9 @@
 package br.ufsc.graphs.structures.storage;
 
+import br.ufsc.graphs.structures.util.DirectionalEdge;
+import br.ufsc.graphs.structures.util.Edge;
+import br.ufsc.graphs.structures.util.NonDirectionalEdge;
+
 import java.util.*;
 
 public class ListStorage implements GraphStorage {
@@ -7,7 +11,7 @@ public class ListStorage implements GraphStorage {
     private Map<Integer, Number>[] adjacencyList;
     private final boolean directional;
 
-    private int edges = 0;
+    private int edgesQnt = 0;
 
     public ListStorage(boolean directional) {
         this.directional = directional;
@@ -19,7 +23,7 @@ public class ListStorage implements GraphStorage {
         if (!directional) {
             adjacencyList[vertex2].put(vertex1, positionValue);
         }
-        edges++;
+        edgesQnt++;
     }
 
     @Override
@@ -36,13 +40,13 @@ public class ListStorage implements GraphStorage {
     }
 
     @Override
-    public int vertices() {
+    public int verticesQnt() {
         return adjacencyList.length;
     }
 
     @Override
-    public int edges() {
-        return edges;
+    public int edgesQnt() {
+        return edgesQnt;
     }
 
     @Override
@@ -66,5 +70,17 @@ public class ListStorage implements GraphStorage {
     @Override
     public Collection<Integer> neighbours(int v1) {
         return adjacencyList[v1].keySet();
+    }
+
+    @Override
+    public Set<Edge> getEdges() {
+        Set<Edge> edges = new HashSet<>();
+        for (int i = 0; i < adjacencyList.length; i++) {
+            for (Integer neighbour : neighbours(i)) {
+                edges.add(directional ? 
+                        new DirectionalEdge(i, neighbour) : new NonDirectionalEdge(i, neighbour));
+            }
+        }
+        return edges;
     }
 }

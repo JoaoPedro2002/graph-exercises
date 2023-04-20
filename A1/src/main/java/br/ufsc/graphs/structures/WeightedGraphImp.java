@@ -9,8 +9,8 @@ public class WeightedGraphImp extends GraphImp {
      */
     public static double NULL_VALUE = Double.POSITIVE_INFINITY;
 
-    public WeightedGraphImp(GraphStorage storage) {
-        super(storage);
+    public WeightedGraphImp(GraphStorage storage, boolean directional) {
+        super(storage, directional);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class GraphBuilder {
         }
 
         GraphStorage storage = GraphStorage.getNewInstance(weighted, directed, implementation);
-        Graph graph = weighted ? new WeightedGraphImp(storage) : new GraphImp(storage);
+        Graph graph = weighted ? new WeightedGraphImp(storage, directed) : new GraphImp(storage, directed);
         graph.read(filePath);
         return graph;
     }
