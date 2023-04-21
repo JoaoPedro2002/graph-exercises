@@ -1,6 +1,7 @@
 package br.ufsc.graphs.structures.util;
 
-import so.dang.cool.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class DirectionalEdge implements Edge {
     final int v1, v2;
@@ -11,7 +12,7 @@ public class DirectionalEdge implements Edge {
 
     @Override
     public Pair<Integer, Integer> getVertices() {
-        return new Pair<>(v1, v2);
+        return new ImmutablePair<>(v1, v2);
     }
 
     @Override

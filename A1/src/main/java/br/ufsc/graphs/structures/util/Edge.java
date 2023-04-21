@@ -1,6 +1,6 @@
 package br.ufsc.graphs.structures.util;
 
-import so.dang.cool.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 public interface Edge {
     Pair<Integer, Integer> getVertices();

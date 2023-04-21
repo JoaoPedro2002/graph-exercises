@@ -12,10 +12,6 @@ public class Main {
         GraphBuilder builder = new GraphBuilder();
         Graph graph = builder.withImplementation(GraphStorage.Implementation.MIXED).withFile(file).build();
         graph.prettyPrint();
-        var r = HierholzerSearch.search(graph);
-        System.out.println(r.getLeft());
-        for (int i = 1; i < r.getRight().size(); i++) {
-            System.out.println(graph.hasEdge(r.getRight().get(i - 1), r.getRight().get(i)));
-        }
+        HierholzerSearch.logSearch(graph);
     }
 }

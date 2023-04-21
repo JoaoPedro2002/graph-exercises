@@ -20,7 +20,7 @@ public class MixedStorage implements GraphStorage {
         if (directional) {
             matrixStorage = new MatrixStorage(weighted);
         } else {
-            matrixStorage = new ListStorage(weighted);
+            matrixStorage = new VectorStorage(weighted);
         }
     }
 

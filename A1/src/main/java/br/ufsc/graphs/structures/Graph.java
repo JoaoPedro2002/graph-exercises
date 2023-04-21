@@ -23,12 +23,12 @@ public interface Graph {
     /**
      * Valor que representa a ausência de arestas entre vértices em um grafo não-ponderado
      */
-    byte NULL_VALUE = 0;
+    double NULL_VALUE = 0;
 
     /**
      * Valor que representa a presença de arestas entre vértices em um grafo não-ponderado
      */
-    byte PRESENT_VALUE = 1;
+    double PRESENT_VALUE = 1;
 
     int getVerticesQnt();
 

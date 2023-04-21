@@ -1,7 +1,7 @@
 package br.ufsc.graphs.structures.util;
 
-import so.dang.cool.Pair;
-
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import java.util.Set;
 
 public class NonDirectionalEdge implements Edge {
@@ -31,7 +31,7 @@ public class NonDirectionalEdge implements Edge {
 
     @Override
     public Pair<Integer, Integer> getVertices() {
-        return new Pair<>(v1, v2);
+        return new ImmutablePair<>(v1, v2);
     }
 
     @Override

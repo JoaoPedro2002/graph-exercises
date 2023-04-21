@@ -3,13 +3,25 @@ package br.ufsc.graphs.structures.search;
 import br.ufsc.graphs.exceptions.GraphException;
 import br.ufsc.graphs.structures.Graph;
 import br.ufsc.graphs.structures.util.Edge;
-import so.dang.cool.Pair;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HierholzerSearch {
 
-    static final Pair<Boolean, List<Integer>> NO_CYCLE = new Pair<>(false, null);
+    static final Pair<Boolean, List<Integer>> NO_CYCLE = new ImmutablePair<>(false, null);
+
+    public static void logSearch(Graph graph) {
+        Pair<Boolean, List<Integer>> pair = search(graph);
+        System.out.println(BooleanUtils.toInteger(pair.getLeft()));
+        System.out.println(pair.getRight().stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","))
+        );
+    }
 
     public static Pair<Boolean, List<Integer>> search(Graph graph) {
         Set<Edge> undiscoveredEdges = graph.getEdges();
@@ -56,7 +68,7 @@ public class HierholzerSearch {
         List<Integer> flatCycle = new ArrayList<>();
         flattenCycle(flatCycle, cycle);
 
-        return new Pair<>(true, flatCycle);
+        return new ImmutablePair<>(true, flatCycle);
     }
 
     private static void flattenCycle(List<Integer> flatCycle, List<?> cycle) {
