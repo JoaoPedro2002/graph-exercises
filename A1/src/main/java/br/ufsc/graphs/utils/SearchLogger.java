@@ -15,6 +15,7 @@ public class SearchLogger {
         System.out.println(this.level + ": " + found.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(",")));
+        this.level++;
     }
 
 }

@@ -40,7 +40,7 @@ public class BreadthFirstSearcher implements GraphSearcher {
                         queue.add(neighbor);
                     }).toList();
 
-            logger.log(newVertices);
+            if (!newVertices.isEmpty()) logger.log(newVertices);
         }
         return new ImmutablePair<>(distances, predecessors);
     }
