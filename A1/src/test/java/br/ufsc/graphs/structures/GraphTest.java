@@ -14,7 +14,6 @@ class GraphTest {
             GraphStorage.Implementation.MATRIX, file);
     static {
         System.out.println("TESTING: " + GraphTest.class.getName());
-        graph.prettyPrint();
     }
 
     @Test

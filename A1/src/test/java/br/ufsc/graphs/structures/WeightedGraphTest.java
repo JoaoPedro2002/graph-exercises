@@ -15,7 +15,6 @@ class WeightedGraphTest {
             GraphStorage.Implementation.MATRIX, file);
     static {
         System.out.println("TESTING: " + WeightedGraphImp.class.getName());
-        graph.prettyPrint();
     }
 
     @Test

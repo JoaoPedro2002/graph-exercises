@@ -14,7 +14,6 @@ class DirectionalGraphTest {
             GraphStorage.Implementation.MATRIX, file);
     static {
         System.out.println("TESTING: " + DirectionalGraphTest.class.getName());
-        graph.prettyPrint();
     }
 
     @Test
