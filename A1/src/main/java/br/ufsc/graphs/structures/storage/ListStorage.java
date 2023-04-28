@@ -1,5 +1,7 @@
 package br.ufsc.graphs.structures.storage;
 
+import br.ufsc.graphs.structures.Graph;
+import br.ufsc.graphs.structures.WeightedGraphImp;
 import br.ufsc.graphs.structures.util.DirectionalEdge;
 import br.ufsc.graphs.structures.util.Edge;
 import br.ufsc.graphs.structures.util.NonDirectionalEdge;
@@ -10,11 +12,14 @@ public class ListStorage implements GraphStorage {
 
     private Map<Integer, Number>[] adjacencyList;
     private final boolean directional;
+    private final Number nullValue;
 
     private int edgesQnt = 0;
 
-    public ListStorage(boolean directional) {
+    public ListStorage(boolean directional, boolean weighted) {
         this.directional = directional;
+        this.nullValue = weighted ?
+                WeightedGraphImp.NULL_VALUE : Graph.NULL_VALUE;
     }
 
     @Override
@@ -36,6 +41,9 @@ public class ListStorage implements GraphStorage {
 
     @Override
     public Number get(int vertex1, int vertex2) {
+        if (!adjacencyList[vertex1].containsKey(vertex2)) {
+            return nullValue;
+        }
         return adjacencyList[vertex1].get(vertex2);
     }
 

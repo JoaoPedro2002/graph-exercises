@@ -1,14 +1,19 @@
 package br.ufsc.graphs.structures.search;
 
-import br.ufsc.graphs.structures.WeightedGraphImp;
+import br.ufsc.graphs.structures.Graph;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class FloydWarshallSearcher {
 
-    public static Number[][] search(WeightedGraphImp g) {
+    public static void searchAndPrint(Graph g) {
+        printResult(search(g));
+    }
+
+    public static Number[][] search(Graph g) {
         Number[][] costs = buildInitialMatrix(g);
         int n = g.getVerticesQnt();
 
@@ -32,7 +37,7 @@ public class FloydWarshallSearcher {
         return a.doubleValue() + b.doubleValue();
     }
 
-    private static Number[][] buildInitialMatrix(WeightedGraphImp g) {
+    private static Number[][] buildInitialMatrix(Graph g) {
         int n = g.getVerticesQnt();
         Number[][] matrix = new Number[n][n];
         for (int i = 0; i < n; i++) {
@@ -45,9 +50,14 @@ public class FloydWarshallSearcher {
     }
 
     public static void printResult(Number[][] m) {
+        var format = new DecimalFormat("0.###");
         IntStream.range(0, m.length)
-                .mapToObj(index -> String.format("%d:%s", index+1, Arrays.stream(m[index]).map(String::valueOf).collect(Collectors.joining(","))))
-                .forEach(System.out::println);
+                .mapToObj(
+                        index -> String.format("%d:%s", index+1,
+                                    Arrays.stream(m[index])
+                                        .map(format::format)
+                                        .collect(Collectors.joining(",")))
+                ).forEach(System.out::println);
     }
 
 }
