@@ -15,7 +15,7 @@ public class MixedStorage implements GraphStorage {
     Set<Edge> edges = new HashSet<>();
 
     public MixedStorage(boolean directional, boolean weighted) {
-        listStorage = new ListStorage(directional);
+        listStorage = new ListStorage(directional, weighted);
         this.directional = directional;
         if (directional) {
             matrixStorage = new MatrixStorage(weighted);

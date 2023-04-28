@@ -43,7 +43,7 @@ public interface GraphStorage {
                 return directional ? new MatrixStorage(weighted) : new VectorStorage(weighted);
             }
             case ADJACENCY_LIST -> {
-                return new ListStorage(directional);
+                return new ListStorage(directional, weighted);
             }
             case MIXED -> {
                 return new MixedStorage(directional, weighted);
