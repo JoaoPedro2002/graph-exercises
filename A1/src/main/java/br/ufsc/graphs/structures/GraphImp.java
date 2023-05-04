@@ -13,15 +13,16 @@ import java.util.Set;
 import java.util.regex.Matcher;
 
 public class GraphImp implements Graph {
-    private final boolean directional;
+    private boolean directional;
 
     String[] labels;
+    GraphStorage storage;
+    final GraphStorage.Implementation implementation;
+    final double nullValue;
 
-    final GraphStorage storage;
-
-    public GraphImp(GraphStorage storage, boolean directional) {
-        this.storage = storage;
-        this.directional = directional;
+    public GraphImp(GraphStorage.Implementation implementation, double nullValue) {
+        this.implementation = implementation;
+        this.nullValue = nullValue;
     }
     @Override
     public int getVerticesQnt() {
@@ -55,7 +56,7 @@ public class GraphImp implements Graph {
 
     @Override
     public boolean hasEdge(int v1, int v2) {
-        return !storage.get(v1, v2).equals(NULL_VALUE);
+        return !storage.get(v1, v2).equals(nullValue);
     }
 
     /**
@@ -68,17 +69,23 @@ public class GraphImp implements Graph {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             // define o tamanho da estrutura de dados e insere os vértices e seus rótulos
-            readVertices(reader);
+            int vertices = readVertices(reader);
+            // Define o armazenamento
+            setStorage(reader, vertices);
             // adiciona as arestas e seu peso caso se aplique
-            readEdges(reader);
+            reader.lines().forEach(this::addEdge);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected void readEdges(BufferedReader reader) throws IOException {
-        if (!reader.readLine().contains("*edges")) throw new IllegalStateException(NON_CONFORMANT_FILE);
-        reader.lines().forEach(this::addEdge);
+    private void setStorage(BufferedReader reader, int vertices) throws IOException {
+        String line = reader.readLine();
+        if (line.contains("*edges")) this.directional = false;
+        else if (line.contains("*arcs")) this.directional = true;
+        else throw new IllegalStateException(NON_CONFORMANT_FILE);
+        this.storage = GraphStorage.getNewInstance(nullValue, this.directional, implementation);
+        this.storage.set(vertices);
     }
 
     private void addEdge(String line) {
@@ -86,24 +93,29 @@ public class GraphImp implements Graph {
         Matcher matcher = NUMBER_PATTERN.matcher(line);
         vertex1 = Integer.parseInt(getIfPresent(matcher)) - 1;
         vertex2 = Integer.parseInt(getIfPresent(matcher)) - 1;
-        Number weight = this instanceof WeightedGraphImp ?
+        Number weight = isWeighted() ?
                 Double.parseDouble(getIfPresent(matcher)) : PRESENT_VALUE;
         storage.add(vertex1, vertex2, weight);
     }
 
-    protected void readVertices(BufferedReader reader) throws IOException {
+    @Override
+    public boolean isWeighted() {
+        return nullValue == Graph.NULL_WEIGHTED_VALUE;
+    }
+
+    protected int readVertices(BufferedReader reader) throws IOException {
         String line;
         Matcher matcher;
         line = reader.readLine();
         matcher = NUMBER_PATTERN.matcher(line);
         int vertices = Integer.parseInt(getIfPresent(matcher));
-        storage.set(vertices);
         labels = new String[vertices];
         for (int i = 0; i < vertices; i++) {
             line = reader.readLine();
             matcher = LABEL_PATTERN.matcher(line);
             labels[i] = getIfPresent(matcher).replace("\"", "");
         }
+        return vertices;
     }
 
     @Override

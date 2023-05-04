@@ -1,7 +1,5 @@
 package br.ufsc.graphs.structures.storage;
 
-import br.ufsc.graphs.structures.Graph;
-import br.ufsc.graphs.structures.WeightedGraphImp;
 import br.ufsc.graphs.structures.util.DirectionalEdge;
 import br.ufsc.graphs.structures.util.Edge;
 import br.ufsc.graphs.structures.util.NonDirectionalEdge;
@@ -16,10 +14,9 @@ public class ListStorage implements GraphStorage {
 
     private int edgesQnt = 0;
 
-    public ListStorage(boolean directional, boolean weighted) {
+    public ListStorage(boolean directional, double nullValue) {
         this.directional = directional;
-        this.nullValue = weighted ?
-                WeightedGraphImp.NULL_VALUE : Graph.NULL_VALUE;
+        this.nullValue = nullValue;
     }
 
     @Override

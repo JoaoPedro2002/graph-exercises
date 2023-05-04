@@ -1,7 +1,6 @@
 package br.ufsc.graphs.structures.search;
 
 import br.ufsc.graphs.structures.Graph;
-import br.ufsc.graphs.structures.WeightedGraphImp;
 import br.ufsc.graphs.utils.SearchLogger;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -15,7 +14,7 @@ public class BreadthFirstSearcher implements GraphSearcher {
 
         // configura todos os vertices
         boolean[] visitArray = new boolean[graph.getVerticesQnt()];
-        List<Integer> distances = new ArrayList<>(Collections.nCopies(graph.getVerticesQnt(), (int) WeightedGraphImp.NULL_VALUE));
+        List<Integer> distances = new ArrayList<>(Collections.nCopies(graph.getVerticesQnt(), (int) Graph.NULL_WEIGHTED_VALUE));
         List<Integer> predecessors = new ArrayList<>(List.of(initialV));
 
         // configura vertice de origem

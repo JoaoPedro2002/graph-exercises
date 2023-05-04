@@ -8,7 +8,6 @@ public class GraphBuilder {
 
     private String filePath;
     private boolean weighted = false;
-    private boolean  directed = false;
 
     private GraphStorage.Implementation implementation = GraphStorage.Implementation.MATRIX;
 
@@ -19,11 +18,6 @@ public class GraphBuilder {
 
     public GraphBuilder withWeightedEdges(boolean weighted) {
         this.weighted = weighted;
-        return this;
-    }
-
-    public GraphBuilder withDirectionalEdges(boolean directed) {
-        this.directed = directed;
         return this;
     }
 
@@ -38,8 +32,9 @@ public class GraphBuilder {
             throw new IllegalStateException();
         }
 
-        GraphStorage storage = GraphStorage.getNewInstance(weighted, directed, implementation);
-        Graph graph = weighted ? new WeightedGraphImp(storage, directed) : new GraphImp(storage, directed);
+
+        double nullValue = weighted ? Graph.NULL_WEIGHTED_VALUE : GraphImp.NULL_VALUE;
+        Graph graph = new GraphImp(implementation, nullValue);
         graph.read(filePath);
         return graph;
     }

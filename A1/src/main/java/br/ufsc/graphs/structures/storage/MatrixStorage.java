@@ -1,7 +1,5 @@
 package br.ufsc.graphs.structures.storage;
 
-import br.ufsc.graphs.structures.Graph;
-import br.ufsc.graphs.structures.WeightedGraphImp;
 import br.ufsc.graphs.structures.util.DirectionalEdge;
 import br.ufsc.graphs.structures.util.Edge;
 
@@ -13,9 +11,8 @@ public class MatrixStorage implements GraphStorage {
 
     private final Number nullValue;
 
-    public MatrixStorage(boolean weighted) {
-        nullValue = weighted ?
-                WeightedGraphImp.NULL_VALUE : Graph.NULL_VALUE;
+    public MatrixStorage(double nullValue) {
+        this.nullValue = nullValue;
     }
 
     @Override

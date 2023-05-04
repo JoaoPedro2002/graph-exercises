@@ -29,6 +29,10 @@ public interface Graph {
      * Valor que representa a presença de arestas entre vértices em um grafo não-ponderado
      */
     double PRESENT_VALUE = 1;
+    /**
+     * Valor que representa a ausência de arestas entre vértices em um grafo ponderado
+     */
+    double NULL_WEIGHTED_VALUE = Double.POSITIVE_INFINITY;
 
     int getVerticesQnt();
 
@@ -56,4 +60,6 @@ public interface Graph {
     double weight(int v1, int v2);
 
     boolean isDirectional();
+
+    boolean isWeighted();
 }

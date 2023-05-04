@@ -10,7 +10,7 @@ class GraphTest {
 
     private static final String file = "instancias/arvore_geradora_minima/agm_tiny.net";
 
-    private static final Graph graph = TestHelper.createGraph(false, false,
+    private static final Graph graph = TestHelper.createGraph(false,
             GraphStorage.Implementation.MATRIX, file);
     static {
         System.out.println("TESTING: " + GraphTest.class.getName());

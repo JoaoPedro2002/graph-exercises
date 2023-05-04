@@ -11,10 +11,10 @@ class WeightedGraphTest {
 
     private static final String file = "instancias/arvore_geradora_minima/agm_tiny.net";
 
-    private static final WeightedGraphImp graph = (WeightedGraphImp) TestHelper.createGraph(true, false,
+    private static final Graph graph = TestHelper.createGraph(true,
             GraphStorage.Implementation.MATRIX, file);
     static {
-        System.out.println("TESTING: " + WeightedGraphImp.class.getName());
+        System.out.println("TESTING: Weighted " + GraphImp.class.getName());
     }
 
     @Test

@@ -1,8 +1,5 @@
 package br.ufsc.graphs.structures.storage;
 
-
-import br.ufsc.graphs.structures.Graph;
-import br.ufsc.graphs.structures.WeightedGraphImp;
 import br.ufsc.graphs.structures.util.Edge;
 import br.ufsc.graphs.structures.util.NonDirectionalEdge;
 
@@ -19,9 +16,8 @@ public class VectorStorage implements GraphStorage {
 
     private final Number nullValue;
 
-    public VectorStorage(boolean weighted) {
-        nullValue = weighted ?
-                WeightedGraphImp.NULL_VALUE : Graph.NULL_VALUE;
+    public VectorStorage(double nullValue) {
+        this.nullValue = nullValue;
     }
 
     @Override

@@ -19,7 +19,7 @@ class HierholzerSearchTest {
     @Test
     public void testValidCycle() {
         final String file = "instancias/ciclo_euleriano/ContemCicloEuleriano.net";
-        final Graph graph = TestHelper.createGraph(false, false,
+        final Graph graph = TestHelper.createGraph(false,
                 GraphStorage.Implementation.MIXED, file);
         var result = HierholzerSearch.search(graph);
         assertTrue(result.getLeft());
@@ -33,7 +33,7 @@ class HierholzerSearchTest {
     @Test
     public void testInvalidCycle() {
         final String file = "instancias/ciclo_euleriano/SemCicloEuleriano.net";
-        final Graph graph = TestHelper.createGraph(false, false,
+        final Graph graph = TestHelper.createGraph(false,
                 GraphStorage.Implementation.MIXED, file);
         var result = HierholzerSearch.search(graph);
         assertFalse(result.getLeft());

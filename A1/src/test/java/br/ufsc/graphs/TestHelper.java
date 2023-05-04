@@ -6,12 +6,10 @@ import br.ufsc.graphs.structures.storage.GraphStorage.Implementation;
 import br.ufsc.graphs.utils.FileUtils;
 
 public class TestHelper {
-    public static Graph createGraph(boolean weighted, boolean directional,
-                                    Implementation implementation, String filePath) {
+    public static Graph createGraph(boolean weighted, Implementation implementation, String filePath) {
         String fullPath = FileUtils.getCompletePathFromResources(filePath);
         return new GraphBuilder()
                 .withWeightedEdges(weighted)
-                .withDirectionalEdges(directional)
                 .withImplementation(implementation)
                 .withFile(fullPath)
                 .build();

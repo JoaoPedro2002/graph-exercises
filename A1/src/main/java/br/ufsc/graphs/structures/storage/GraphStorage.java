@@ -36,17 +36,18 @@ public interface GraphStorage {
      * @param implementation implementação do Storage
      * @return nova instância criada
      */
-    static GraphStorage getNewInstance(boolean weighted, boolean directional,
+    static GraphStorage getNewInstance(double nullValue,
+                                       boolean directional,
                                        Implementation implementation) {
         switch (implementation) {
             case MATRIX -> {
-                return directional ? new MatrixStorage(weighted) : new VectorStorage(weighted);
+                return directional ? new MatrixStorage(nullValue) : new VectorStorage(nullValue);
             }
             case ADJACENCY_LIST -> {
-                return new ListStorage(directional, weighted);
+                return new ListStorage(directional, nullValue);
             }
             case MIXED -> {
-                return new MixedStorage(directional, weighted);
+                return new MixedStorage(directional, nullValue);
             }
             default -> throw new IllegalStateException();
         }

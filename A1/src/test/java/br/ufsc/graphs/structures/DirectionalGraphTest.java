@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DirectionalGraphTest {
 
-    private static final String file = "instancias/arvore_geradora_minima/agm_tiny.net";
+    private static final String file = "instancias/arvore_geradora_minima/agm_tiny_directional.net";
 
-    private static final Graph graph = TestHelper.createGraph(false, true,
+    private static final Graph graph = TestHelper.createGraph(false,
             GraphStorage.Implementation.MATRIX, file);
     static {
         System.out.println("TESTING: " + DirectionalGraphTest.class.getName());

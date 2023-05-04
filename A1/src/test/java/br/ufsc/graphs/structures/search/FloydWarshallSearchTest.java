@@ -5,10 +5,7 @@ import br.ufsc.graphs.structures.Graph;
 import br.ufsc.graphs.structures.storage.GraphStorage;
 import org.junit.jupiter.api.Test;
 
-import java.security.SecureRandom;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,7 +18,7 @@ public class FloydWarshallSearchTest {
     @Test
     public void testValid() {
         final String file = "instancias/arvore_geradora_minima/agm_tiny.net";
-        final Graph graph = TestHelper.createGraph(true, false,
+        final Graph graph = TestHelper.createGraph(true,
                 GraphStorage.Implementation.MIXED, file);
         int randomPickedV = ThreadLocalRandom.current().nextInt(0, graph.getVerticesQnt());
         int randomPickedD;

@@ -17,7 +17,7 @@ public class BellmanFordSearchTest {
     @Test
     public void testValid() {
         final String file = "instancias/caminho_minimo/fln_pequena.net";
-        final Graph graph = TestHelper.createGraph(true, false,
+        final Graph graph = TestHelper.createGraph(true,
                 GraphStorage.Implementation.MIXED, file);
         var result = BellmanFordSearch.search(graph);
         assertTrue(result.getLeft());
