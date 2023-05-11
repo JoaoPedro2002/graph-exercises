@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>br.ufsc.graphs</groupId>
-    <artifactId>a1</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>ine5413</artifactId>
+    <version>2.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
