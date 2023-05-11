@@ -62,4 +62,6 @@ public interface Graph {
     boolean isDirectional();
 
     boolean isWeighted();
+
+    Graph getTransposed();
 }

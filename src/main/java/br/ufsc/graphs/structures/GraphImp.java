@@ -2,14 +2,14 @@ package br.ufsc.graphs.structures;
 
 
 import br.ufsc.graphs.structures.storage.GraphStorage;
+import br.ufsc.graphs.structures.util.DirectionalEdge;
 import br.ufsc.graphs.structures.util.Edge;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 
 public class GraphImp implements Graph {
@@ -24,6 +24,16 @@ public class GraphImp implements Graph {
         this.implementation = implementation;
         this.nullValue = nullValue;
     }
+
+    public GraphImp(GraphStorage.Implementation implementation, double nullValue, String[] labels, boolean directional, int vertices, List<Pair<Edge, Double>> transversedEdges) {
+        this.implementation = implementation;
+        this.nullValue = nullValue;
+        this.labels = labels;
+        this.directional = directional;
+        setStorage(vertices);
+        addEdge(transversedEdges);
+    }
+
     @Override
     public int getVerticesQnt() {
         return storage.verticesQnt();
@@ -88,6 +98,11 @@ public class GraphImp implements Graph {
         this.storage.set(vertices);
     }
 
+    private void setStorage(int vertices) {
+        this.storage = GraphStorage.getNewInstance(nullValue, this.directional, implementation);
+        this.storage.set(vertices);
+    }
+
     private void addEdge(String line) {
         int vertex1, vertex2;
         Matcher matcher = NUMBER_PATTERN.matcher(line);
@@ -96,6 +111,12 @@ public class GraphImp implements Graph {
         Number weight = isWeighted() ?
                 Double.parseDouble(getIfPresent(matcher)) : PRESENT_VALUE;
         storage.add(vertex1, vertex2, weight);
+    }
+
+    private void addEdge(List<Pair<Edge, Double>> transversedEdges) {
+        for (Pair<Edge, Double> edge : transversedEdges) {
+            storage.add(edge.getLeft().getVertices().getLeft(), edge.getLeft().getVertices().getRight(), edge.getRight());
+        }
     }
 
     @Override
@@ -112,8 +133,8 @@ public class GraphImp implements Graph {
         labels = new String[vertices];
         for (int i = 0; i < vertices; i++) {
             line = reader.readLine();
-            matcher = LABEL_PATTERN.matcher(line);
-            labels[i] = getIfPresent(matcher).replace("\"", "");
+            line = line.replace(String.valueOf(i+1), "");
+            labels[i] = line.replace("\"", "").trim();
         }
         return vertices;
     }
@@ -141,5 +162,18 @@ public class GraphImp implements Graph {
     private static String getIfPresent(Matcher matcher) {
         if (!matcher.find()) throw new IllegalStateException(NON_CONFORMANT_FILE);
         return matcher.group();
+    }
+
+    public Graph getTransposed() {
+        List<Pair<Edge, Double>> transversedEdges = new ArrayList<>();
+        for (Edge edge : getEdges()) {
+            Integer left = edge.getVertices().getLeft();
+            Integer right = edge.getVertices().getRight();
+            Double weight = weight(left, right);
+            DirectionalEdge directionalEdge = new DirectionalEdge(right, left);
+            transversedEdges.add(Pair.of(directionalEdge, weight));
+        }
+        Graph graph = new GraphImp(implementation, nullValue, labels, directional, getVerticesQnt(), transversedEdges);
+        return graph;
     }
 }
