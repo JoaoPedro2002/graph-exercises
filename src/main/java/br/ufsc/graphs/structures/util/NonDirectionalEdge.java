@@ -38,4 +38,9 @@ public class NonDirectionalEdge implements Edge {
     public int getOtherVertex(int v) {
         return v == v1 ? v2 : v1;
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%d, %d)", v1, v2);
+    }
 }

@@ -129,6 +129,12 @@ public class GraphImp implements Graph {
     }
 
     @Override
+    public double weight(Edge edge) {
+        var vertices = edge.getVertices();
+        return weight(vertices.getLeft(), vertices.getRight());
+    }
+
+    @Override
     public boolean isDirectional() {
         return directional;
     }

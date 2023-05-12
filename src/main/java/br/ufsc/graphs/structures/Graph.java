@@ -59,6 +59,8 @@ public interface Graph {
 
     double weight(int v1, int v2);
 
+    double weight(Edge edge);
+
     boolean isDirectional();
 
     boolean isWeighted();
