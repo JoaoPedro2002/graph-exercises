@@ -15,7 +15,7 @@ public class BellmanFordSearch {
 
     public static Triple<Boolean, Double[], Integer[]> search(Graph graph){
         Set<Edge> undiscoveredEdges = graph.getEdges();
-        int source = undiscoveredEdges.iterator().next().getVertices().getLeft();
+        int source = undiscoveredEdges.iterator().next().getLeft();
         Triple<Boolean, Double[], Integer[]> result = search(graph, source);
         log(result);
         return result;
@@ -31,8 +31,8 @@ public class BellmanFordSearch {
 
         for (int i = 0; i < graph.getVerticesQnt(); i++) {
             for (Edge edge : graph.getEdges()) {
-                int u = edge.getVertices().getLeft();
-                int v = edge.getVertices().getRight();
+                int u = edge.getLeft();
+                int v = edge.getRight();
                 double weight = graph.weight(u, v);
                 if (distances[v] > distances[u] + weight) {
                     distances[v] = distances[u] + weight;
@@ -48,8 +48,8 @@ public class BellmanFordSearch {
         }
 
         for (Edge edge : graph.getEdges()) {
-            int u = edge.getVertices().getLeft();
-            int v = edge.getVertices().getRight();
+            int u = edge.getLeft();
+            int v = edge.getRight();
             double weight = graph.weight(u, v);
             if (distances[v] > distances[u] + weight) {
                 return Triple.of(false, null, null);
