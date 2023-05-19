@@ -115,7 +115,7 @@ public class GraphImp implements Graph {
 
     private void addEdge(List<Pair<Edge, Double>> transversedEdges) {
         for (Pair<Edge, Double> edge : transversedEdges) {
-            storage.add(edge.getLeft().getVertices().getLeft(), edge.getLeft().getVertices().getRight(), edge.getRight());
+            storage.add(edge.getLeft().getLeft(), edge.getLeft().getRight(), edge.getRight());
         }
     }
 
@@ -172,13 +172,12 @@ public class GraphImp implements Graph {
     public Graph getTransposed() {
         List<Pair<Edge, Double>> transversedEdges = new ArrayList<>();
         for (Edge edge : getEdges()) {
-            Integer left = edge.getVertices().getLeft();
-            Integer right = edge.getVertices().getRight();
+            int left = edge.getLeft();
+            int right = edge.getRight();
             Double weight = weight(left, right);
             DirectionalEdge directionalEdge = new DirectionalEdge(right, left);
             transversedEdges.add(Pair.of(directionalEdge, weight));
         }
-        Graph graph = new GraphImp(implementation, nullValue, labels, directional, getVerticesQnt(), transversedEdges);
-        return graph;
+        return new GraphImp(implementation, nullValue, labels, directional, getVerticesQnt(), transversedEdges);
     }
 }
