@@ -150,6 +150,11 @@ public class GraphImp implements Graph {
     }
 
     @Override
+    public double weight(Edge edge) {
+        return weight(edge.getLeft(), edge.getRight());
+    }
+
+    @Override
     public boolean isDirectional() {
         return directional;
     }

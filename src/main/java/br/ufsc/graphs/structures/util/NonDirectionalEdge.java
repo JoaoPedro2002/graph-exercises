@@ -23,19 +23,30 @@ public class NonDirectionalEdge implements Edge {
     public boolean equals(Object obj) {
         if (this == obj) {
           return true;
-        } if (obj instanceof NonDirectionalEdge edge) {
+        }
+        if (obj instanceof NonDirectionalEdge edge) {
             return vertices.equals(edge.vertices);
         }
         return false;
     }
 
     @Override
-    public Pair<Integer, Integer> getVertices() {
-        return new ImmutablePair<>(v1, v2);
+    public int getOtherVertex(int v) {
+        return v == v1 ? v2 : v1;
     }
 
     @Override
-    public int getOtherVertex(int v) {
-        return v == v1 ? v2 : v1;
+    public int getLeft() {
+        return v1;
+    }
+
+    @Override
+    public int getRight() {
+        return v2;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d-%d", v1, v2);
     }
 }

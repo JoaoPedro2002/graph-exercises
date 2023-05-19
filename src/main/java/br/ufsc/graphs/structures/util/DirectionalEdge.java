@@ -11,13 +11,18 @@ public class DirectionalEdge implements Edge {
     }
 
     @Override
-    public Pair<Integer, Integer> getVertices() {
-        return new ImmutablePair<>(v1, v2);
+    public int getOtherVertex(int v) {
+        return v == v1 ? v2 : v1;
     }
 
     @Override
-    public int getOtherVertex(int v) {
-        return v == v1 ? v2 : v1;
+    public int getLeft() {
+        return v1;
+    }
+
+    @Override
+    public int getRight() {
+        return v2;
     }
 
     @Override
@@ -26,5 +31,10 @@ public class DirectionalEdge implements Edge {
         if (o == null || getClass() != o.getClass()) return false;
         DirectionalEdge edge = (DirectionalEdge) o;
         return this.v1 == edge.v1 && this.v2 == edge.v2;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d-%d", v1, v2);
     }
 }

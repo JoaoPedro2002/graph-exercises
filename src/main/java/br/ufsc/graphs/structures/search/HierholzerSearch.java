@@ -25,7 +25,7 @@ public class HierholzerSearch {
 
     public static Pair<Boolean, List<Integer>> search(Graph graph) {
         Set<Edge> undiscoveredEdges = graph.getEdges();
-        int vertex = undiscoveredEdges.iterator().next().getVertices().getLeft();
+        int vertex = undiscoveredEdges.iterator().next().getLeft();
         Pair<Boolean, List<Integer>> pair = searchEuclidianSubCycle(vertex, undiscoveredEdges);
         if (!pair.getLeft()) return NO_CYCLE;
         if (!undiscoveredEdges.isEmpty()) {
