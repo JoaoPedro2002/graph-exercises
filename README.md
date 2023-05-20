@@ -1,4 +1,4 @@
-# Atividade Prática A1 – Grafos (INE5413)
+# Atividade Prática A2 – Grafos (INE5413)
 
 ## Trabalho desenvolvido por:
 - Anthon Porath Gretter `(20204787)`
