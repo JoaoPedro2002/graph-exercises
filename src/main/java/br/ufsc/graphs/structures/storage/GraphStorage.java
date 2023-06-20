@@ -31,7 +31,6 @@ public interface GraphStorage {
     /**
      * Cria uma instância de um GraphStorage com base nos parâmetros
      * enviados
-     * @param weighted se o grafo é ponderado
      * @param directional se o grafo é direcional
      * @param implementation implementação do Storage
      * @return nova instância criada
