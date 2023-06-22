@@ -9,6 +9,8 @@ public class GraphBuilder {
     private String filePath;
     private boolean weighted = false;
 
+    private boolean biparted = false;
+
     private GraphStorage.Implementation implementation = GraphStorage.Implementation.MATRIX;
 
     public GraphBuilder withFile(String filePath) {
@@ -26,6 +28,11 @@ public class GraphBuilder {
         return this;
     }
 
+    public GraphBuilder biparted(boolean biparted) {
+        this.biparted = biparted;
+        return this;
+    }
+
     public Graph build() {
         // TODO error message
         if (Objects.isNull(filePath)) {
@@ -34,7 +41,7 @@ public class GraphBuilder {
 
 
         double nullValue = weighted ? Graph.NULL_WEIGHTED_VALUE : GraphImp.NULL_VALUE;
-        Graph graph = new GraphImp(implementation, nullValue);
+        Graph graph = biparted ? new BiPartedGraph(implementation, nullValue) : new GraphImp(implementation, nullValue);
         graph.read(filePath);
         return graph;
     }
