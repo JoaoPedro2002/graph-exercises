@@ -180,4 +180,9 @@ public class GraphImp implements Graph {
         }
         return new GraphImp(implementation, nullValue, labels, directional, getVerticesQnt(), transversedEdges);
     }
+
+    @Override
+    public void setWeight(int u, int v, double updatedValue) {
+        storage.add(u, v, updatedValue);
+    }
 }
