@@ -66,4 +66,6 @@ public interface Graph {
     boolean isWeighted();
 
     Graph getTransposed();
+
+    void setWeight(int u, int v, double updatedValue);
 }
